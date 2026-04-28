@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "prod-router-api"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-j1djercsjnoj"
+s3_prefix = "prod-router-api"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"

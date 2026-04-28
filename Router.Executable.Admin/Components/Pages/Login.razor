@@ -1,0 +1,56 @@
+@page "/login"
+@inject NavigationManager Nav
+@inject AuthenticationStateProvider AuthStateProvider
+
+@attribute [AllowAnonymous]
+
+@if (!_isChecking)
+{
+    <PageTitle>Sign In</PageTitle>
+
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card shadow" style="width: 360px;">
+            <div class="card-body p-4">
+                <h4 class="card-title mb-4 text-center">Sign In</h4>
+
+                @if (_error)
+                {
+                    <div class="alert alert-danger">Invalid username or password</div>
+                }
+
+                <form method="post" action="/account/login" @formname="login-form">
+                    <AntiforgeryToken/>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input name="login" class="form-control" placeholder="Enter username"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Enter password"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool _error;
+    private bool _isChecking = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthStateProvider.GetAuthenticationStateAsync();
+        if (state.User.Identity?.IsAuthenticated == true)
+        {
+            Nav.NavigateTo("/", forceLoad: true);
+            return;
+        }
+
+        _isChecking = false;
+        var uri = new Uri(Nav.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        _error = query["error"] == "1";
+    }
+}

@@ -1,0 +1,71 @@
+﻿@if (_target != null)
+{
+    var isDirty = !_target.IsNew && _isModified;
+    var rowCls = "target-row" + (_target.IsNew ? " is-new" : "") + (isDirty ? " is-modified" : "") + (_target.Maintenance ? " maint-on-row" : "");
+    var addrEmpty = string.IsNullOrWhiteSpace(_target.Address);
+
+    <div class="@rowCls">
+        @if (_target.IsNew)
+        {
+            <span class="dirty-badge badge-new">new</span>
+        }
+        else if (isDirty)
+        {
+            <span class="dirty-badge badge-modified">modified</span>
+        }
+
+        <div class="row g-2 align-items-center">
+            @* Target name *@
+            <div class="col-auto" style="min-width:200px">
+                @if (_target.IsNew)
+                {
+                    <input type="text" class="form-control form-control-sm" value="@_target.Target" @onchange="OnChangeTarget" placeholder="Target name"/>
+                }
+                else
+                {
+                    <span class="fw-semibold small">@_target.Target</span>
+                    @if (_target.Maintenance)
+                    {
+                        <span class="maint-badge">MAINTENANCE</span>
+                    }
+                }
+            </div>
+
+            @* Address *@
+            <div class="col">
+                <input type="text" class="@("addr-input form-control form-control-sm" + (addrEmpty ? " is-empty" : ""))"
+                       value="@_target.Address" @onchange="OnChangeAddress" placeholder="https://..."/>
+            </div>
+
+            @* Maintenance toggle + delete *@
+            <div class="col-auto d-flex align-items-center gap-2">
+                <div class="form-check form-switch mb-0 d-flex align-items-center gap-1">
+                    <input class="form-check-input" type="checkbox"
+                           id="maint-@_target.Id"
+                           checked="@_target.Maintenance"
+                           @onchange="OnChangeToggle"
+                           style="width:2.2em;height:1.15em;cursor:pointer"/>
+                    <label class="form-check-label @(_target.Maintenance ? "maint-on-label" : "maint-off-label")"
+                           for="maint-@_target.Id">
+                        @(_target.Maintenance ? "Maintenance ON" : "Maintenance OFF")
+                    </label>
+                </div>
+
+                @{
+                    var targetRulesCount = RoutingService.GetRulesCount(_target.Target);
+                }
+
+                @if (targetRulesCount == 0)
+                {
+                    <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteTarget(_target)">×</button>
+                }
+                else
+                {
+                    <button class="btn btn-sm btn-outline-secondary" disabled
+                            title="@($"{targetRulesCount} routing rule(s) use this target")">×
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+}

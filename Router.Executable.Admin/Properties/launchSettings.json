@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Router.Executable.Admin": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:5201;http://localhost:5101",
+      "environmentVariables": {
+        "RUNTIME_ENVIRONMENT": "debug",
+        "BUILD_VERSION": "1"
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+# ==== IDE ====
+.vs/
+.idea/
+.vscode/
+
+# Rider / ReSharper
+*.DotSettings.user
+
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ==== Build ====
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+out/
+
+# ==== Logs ====
+*.log
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# ==== OS ====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==== Temp ====
+*.swp
+*~

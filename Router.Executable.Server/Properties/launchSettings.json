@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "Router.Executable.Server": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "RUNTIME_ENVIRONMENT": "debug"
+      }
+    }
+  }
+}

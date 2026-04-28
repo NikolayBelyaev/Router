@@ -1,0 +1,31 @@
+{
+  "UserCredentialsConfig": {
+    "Login": "admin",
+    "Password": 123
+  },
+
+  "RouterApiConfiguration": {
+    "BaseUrl": "http://localhost:5000/prod/",
+    "GetRoutingConfigRoute": "get-routing-configuration",
+    "GetRouteTargetConfigRoute": "get-route-target-configuration",
+    "SetRoutingConfigRoute": "set-routing-configuration",
+    "SetRouteTargetConfigRoute": "set-route-target-configuration",
+    "SetMaintenanceOnRoute": "set-maintenance-on",
+    "SetMaintenanceOffRoute": "set-maintenance-off",
+    "AddRoutingRuleRoute": "add-routing-rule",
+    "UpdateRoutingRuleRoute": "update-routing-rule",
+    "DeleteRoutingRuleRoute": "delete-routing-rule",
+    "AddRouteTargetRoute": "add-route-target",
+    "UpdateRouteTargetRoute": "update-route-target",
+    "DeleteRouteTargetRoute": "delete-route-target",
+    "AuthorizationToken": "Token"
+  },
+
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "System": "Warning"
+    }
+  }
+}

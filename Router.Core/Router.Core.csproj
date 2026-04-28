@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>disable</Nullable>
+        <LangVersion>9</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.300.23" />
+      <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Router.Redis\Router.Redis.csproj" />
+      <ProjectReference Include="..\Router.Shared\Router.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

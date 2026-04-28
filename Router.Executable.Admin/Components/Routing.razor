@@ -1,0 +1,80 @@
+﻿@using Kit.Exe
+<div class="main-card p-1">
+    @if (_loaded)
+    {
+        <ul class="nav nav-tabs" id="serverTabs" role="tablist">
+            @foreach (var server in RoutingService.Servers.OrderByDescending(x => x.Name == Constants.HostingEnvironment.Production))
+            {
+                <li class="nav-item" role="presentation">
+                    @if (server.IsEditing)
+                    {
+                        <div class="p-1">
+                            <input type="text" class="form-control form-control-sm" @ref="_inputReference"
+                                   @bind="server.Name" @bind:event="oninput" 
+                                   @onkeydown="@(async e => await HandleKeyDown(e, server))"
+                                   autofocus onfocus="this.select()" @onblur="() => FinishEditing(server)"
+                                   style="width: 150px;"/>
+                        </div>
+                    }
+                    else
+                    {
+                        var cls = "nav-link" +
+                                      (server == _active ? " active" : "") +
+                                      (server.ToBeDeleted ? " tab-deleted" : "");
+
+                        <button class="@cls" @onclick="() => Select(server)" type="button" data-bs-toggle="pill"
+                                data-bs-target="#st-@server.Id">
+                            @server.Name
+                        </button>
+                    }
+                </li>
+            }
+
+            <li class="nav-item">
+                <button class="nav-link text-primary" type="button" @onclick="OnAddServer">
+                    <strong>+</strong>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content border border-top-0 rounded-bottom p-3">
+            @if (_active != null)
+            {
+                @if (_active.ToBeDeleted)
+                {
+                    <div class="deleted-banner d-flex align-items-center gap-3">
+                        <span>All rules for server <strong>@_active.Name</strong> will be removed on Apply changes.</span>
+                        <button class="btn btn-sm btn-outline-secondary ms-auto"
+                                @onclick="() => OnRestoreServer(_active)">
+                            Restore
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var srv in RoutingService.Servers)
+                    {
+                        var isActive = srv.Id == _active.Id;
+
+                        <div class="tab-pane fade @(isActive ? "show active" : "")" id="st-@srv.Id" role="tabpanel">
+                            @foreach (var rule in srv.Rules)
+                            {
+                                <RuleCard RoutingServer="srv" TargetsNames="TargetsNames" RoutingRule="rule" OnChanged="OnChanged"/>
+                            }
+
+                            <div class="d-flex justify-content-between mt-2">
+                                <button class="btn btn-outline-secondary btn-sm" @onclick="() => OnAddRule(srv)">
+                                    + Add Rule
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="() => OnDeleteServer(srv)">
+                                    Remove Server
+                                </button>
+                            </div>
+
+                        </div>
+                    }
+                }
+            }
+        </div>
+    }
+</div>

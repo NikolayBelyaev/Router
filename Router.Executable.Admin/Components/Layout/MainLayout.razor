@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    <header class="d-flex justify-content-end p-2" style="position: fixed; top: 0; right: 0; z-index: 1000;">
+                        <form method="post" action="/account/logout">
+                            <AntiforgeryToken/>
+                            <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                Logout
+                            </button>
+                        </form>
+                    </header>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+
+        <article class="padding-top: 50px;">
+            @Body
+        </article>
+    </main>
+</div>

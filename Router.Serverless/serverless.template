@@ -1,0 +1,81 @@
+{
+	"AWSTemplateFormatVersion" : "2010-09-09",
+	"Transform" : "AWS::Serverless-2016-10-31",
+	"Description" : "An AWS Serverless Application.",
+
+	"Resources" : {
+
+		"GetServerAddress" : {
+			"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "Router.Serverless::Router.Serverless.Functions::GetServerAddress",
+				"Runtime": "dotnetcore3.1",
+				"CodeUri": "",
+				"MemorySize": 256,
+				"Timeout": 30,
+				"Role": null,
+				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Events": {
+					"RootGet": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/get-server-address",
+							"Method": "POST"
+						}
+					}
+				}
+			}
+		},
+		
+		"GetRoutingConfiguration" : {
+        	"Type" : "AWS::Serverless::Function",
+        	"Properties": {
+        		"Handler": "Router.Serverless::Router.Serverless.Functions::GetRoutingConfiguration",
+        		"Runtime": "dotnetcore3.1",
+        		"CodeUri": "",
+        		"MemorySize": 256,
+        		"Timeout": 30,
+        		"Role": null,
+        		"Policies": [ "AWSLambdaBasicExecutionRole" ],
+        		"Events": {
+        			"RootGet": {
+        				"Type": "Api",
+        				"Properties": {
+        					"Path": "/get-routing-configuration",
+        					"Method": "GET"
+        				}
+        			}
+        		}
+        	}
+        },
+
+		"GetRouteTargetConfiguration" : {
+			"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "Router.Serverless::Router.Serverless.Functions::GetRouteTargetConfiguration",
+				"Runtime": "dotnetcore3.1",
+				"CodeUri": "",
+				"MemorySize": 256,
+				"Timeout": 30,
+				"Role": null,
+				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Events": {
+					"RootGet": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/get-route-target-configuration",
+							"Method": "GET"
+						}
+					}
+				}
+			}
+		}
+	},
+
+	"Outputs" : {
+		"ApiURL" : {
+			"Description" : "API endpoint URL for Prod environment",
+			"Value" : { "Fn::Sub" : "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/" }
+		}
+	}
+}

@@ -1,0 +1,13 @@
+{
+  "RouterConfiguration": {
+    "Token": "Token",
+    "AWSAccessKeyId": "AWSAccessKeyId",
+    "AWSSecret": "AWSSecret",
+    "DynamoDbTablePrefix": "dev-"
+  },
+
+  "RedisConfiguration": {
+    "Host": "localhost:6379",
+    "Password": "password"
+  }
+}

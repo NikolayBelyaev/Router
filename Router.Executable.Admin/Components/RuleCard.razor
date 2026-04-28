@@ -1,0 +1,99 @@
+﻿@using global::Router.Core.Model.Configuration
+@using Router.Executable.Admin.Enums
+
+@{
+    var dirty = !RoutingRule.IsNew && RoutingRule.IsModified();
+    var cardCls = "rule-card p-3 mb-2" + (RoutingRule.IsNew ? " is-new" : "") + (dirty ? " is-modified" : "");
+}
+
+<div class="@cardCls">
+    @if (RoutingRule.IsNew)
+    {
+        <span class="dirty-badge badge-new">new</span>
+    }
+    else if (dirty)
+    {
+        <span class="dirty-badge badge-modified">modified</span>
+    }
+
+    <div class="row g-2 align-items-center">
+
+        @* Version *@
+        <div class="col-auto d-flex align-items-center gap-1">
+            <span class="text-muted small">≥</span>
+            @if (RoutingRule.IsNew)
+            {
+                <div>
+                    <input type="text" class="form-control form-control-sm ver-input @(_isVersionValid ? "": "is-invalid")" 
+                           value="@RoutingRule.Version" 
+                           @onchange="e => OnVersionChange(RoutingRule, e)" 
+                           placeholder="0.0.0"/>
+                    @if (!_isVersionValid)
+                    {
+                        <div class="invalid-feedback">Invalid version format</div>
+                    }
+                </div>
+            }
+            else
+            {
+                <span class="ver-static">@RoutingRule.Version</span>
+            }
+        </div>
+
+
+        @* Target *@
+        <div class="col">
+            <select class="form-select form-select-sm" value="@RoutingRule.Target" @onchange="OnUpdateTarget">
+                @{
+                    foreach (var t in TargetsNames)
+                    {
+                        <option value="@t" selected="@(t == RoutingRule.Target)">@t</option>
+                    }
+
+                    if (!TargetsNames.Contains(RoutingRule.Target) && !string.IsNullOrEmpty(RoutingRule.Target))
+                    {
+                        <option value="@RoutingRule.Target" selected>@RoutingRule.Target ⚠</option>
+                    }
+                }
+            </select>
+        </div>
+
+        @* Update mode *@
+        <div class="col">
+            <select class="form-select form-select-sm" value="@RoutingRule.UpdateMode" @onchange="OnUpdateMode">
+                @foreach (var mode in Enum.GetValues<UpdateMode>())
+                {
+                    if (mode == UpdateMode.None)
+                        continue;
+
+                    <option value="@mode" selected="@(mode == RoutingRule.UpdateMode)">@mode.ToString()</option>
+                }
+            </select>
+        </div>
+
+        @* Delete *@
+        <div class="col-auto">
+            <button class="btn btn-sm btn-outline-danger" @onclick="() => OnDeleteRule(RoutingServer, RoutingRule)">×</button>
+        </div>
+
+        @* Platform badges *@
+        <div class="mt-2">
+            <span class="text-muted small me-1">Platforms:</span>
+            @foreach (var p in Enum.GetValues<ClientPlatform>())
+            {
+                var taken = RoutingRule.Version != null && RoutingService.GetTakenPlatforms(RoutingServer, RoutingRule.Version.Value, RoutingRule.Id).Contains(p);
+                var on = RoutingRule.Platforms.Contains(p);
+                var state = taken ? "taken" : on ? "on" : "off";
+                var stringValue = p.ToString().ToLower();
+
+                <span class="ptag badge p-@stringValue me-1 mb-1 state-@state"
+                      @onclick="() => OnTogglePlatform(RoutingRule, taken, p)">@stringValue</span>
+            }
+        </div>
+
+    </div>
+
+    @* Range hint *@
+    <div class="range-hint">@GetRangeHintText(RoutingServer.Rules, RoutingRule)</div>
+
+</div>

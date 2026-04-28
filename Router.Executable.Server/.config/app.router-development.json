@@ -1,0 +1,5 @@
+﻿{
+  "RouterConfiguration": {
+    "DynamoDbTablePrefix": "dev-"
+  }
+}

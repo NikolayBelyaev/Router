@@ -1,0 +1,51 @@
+﻿<div class="maintenance-editor p-2">
+
+    <div class="d-flex align-items-center mb-3">
+        <button class="btn btn-outline-secondary btn-sm" @onclick="UpdateState">
+            ↻ Update State
+        </button>
+    </div>
+
+    @if (_targets == null)
+    {
+        <p class="text-muted small">Loading...</p>
+    }
+    else if (!_targets.Any())
+    {
+        <p class="text-muted small">No targets.</p>
+    }
+    else
+    {
+        @foreach (var target in _targets)
+        {
+            <div class="@("target-row" + (target.Maintenance ? " maint-on-row" : ""))">
+                <div class="row g-2 align-items-center flex-nowrap">
+
+                    @* Target name + maintenance badge *@
+                    <div class="col d-flex align-items-center gap-2">
+                        <span class="fw-semibold small">@target.Target</span>
+                        @if (target.Maintenance)
+                        {
+                            <span class="maint-badge">MAINTENANCE</span>
+                        }
+                    </div>
+
+                    @* Action buttons pinned to the right *@
+                    <div class="col-auto d-flex align-items-center gap-2 ms-auto">
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => RequestSetMaintenance(target.Target, true)">
+                            Set Maintenance On
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary" @onclick="() => RequestSetMaintenance(target.Target, false)">
+                            Set Maintenance Off
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<ConfirmationModal @ref="_confirmationModal" Title="Set maintenance" 
+                   Message="@($"Are you sure you want to set maintenance {(_pendingMaintenanceOn ? "on" : "off")} for '{_pendingTargetName}'")" 
+                   OnConfirmed="Apply"/>

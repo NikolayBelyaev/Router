@@ -1,0 +1,20 @@
+﻿<div class="targets-editor p-1">
+    @if (!TargetsService.GetTargets().Any())
+    {
+        <p class="text-muted small">No any targets.</p>
+    }
+
+    @{
+        var targets = TargetsService.GetTargets()
+            .Where(t => t != null);
+    }
+
+    @foreach (var target in targets)
+    {
+        <TargetRow TargetId="@target.Id" OnChanged="OnChanged"/>
+    }
+
+    <div class="d-flex gap-2 mt-3 flex-wrap">
+        <button class="btn btn-outline-secondary btn-sm" @onclick="AddTarget">+ Add Target</button>
+    </div>
+</div>
