@@ -28,13 +28,13 @@ The public `get-server-address` endpoint is open. All management endpoints requi
 <summary>📸 Click to view Admin UI Screenshots</summary>
 
 ### Routing Rules Configuration
-![Rules Tab](images/admin-rules.png)
+![Rules Tab](Images/admin-rules.png)
 
 ### Maintenance
-![Maintenance Tab](images/admin-maintenance.png)
+![Maintenance Tab](Images/admin-maintenance.png)
 
 ### Targets Management
-![Targets Tab](images/admin-targets.png)
+![Targets Tab](Images/admin-targets.png)
 
 </details>
 
