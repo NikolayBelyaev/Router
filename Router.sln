@@ -27,6 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{370B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kit.Services.Redis", "Kit.Services.Redis\Kit.Services.Redis.csproj", "{7BE63E0F-D1EA-4020-822F-D077A7A5D690}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{C44FEE40-6818-470A-966B-D1234E27F2AB}"
+	ProjectSection(SolutionItems) = preProject
+		Images\admin-maintenance.png = Images\admin-maintenance.png
+		Images\admin-rules.png = Images\admin-rules.png
+		Images\admin-targets.png = Images\admin-targets.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

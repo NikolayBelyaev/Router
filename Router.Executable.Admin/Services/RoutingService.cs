@@ -84,8 +84,8 @@ public class RoutingService : IRoutingService
         var rule = GetRule(routingServer.Id, ruleId);
         if (rule == null)
             return false;
-        
-        routingServer.Rules.Remove(rule);
+
+        rule.ToBeDeleted = true;
         return true;
     }
 

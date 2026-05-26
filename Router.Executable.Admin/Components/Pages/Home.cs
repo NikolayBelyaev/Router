@@ -94,19 +94,25 @@ public partial class Home
                 if (server.ToBeDeleted)
                 {
                     foreach (var rule in server.Rules)
+                    {
                         foreach (var entryId in rule.ServerIds.Values)
                             await RoutingConfigurationService.DeleteRoutingRule(entryId);
+                    }
+                    
                     continue;
                 }
 
-                if (server.IsEditing) continue;
+                if (server.IsEditing) 
+                    continue;
 
                 foreach (var rule in server.Rules)
                 {
                     var currentPlatforms = rule.Platforms.ToHashSet();
                     foreach (var (platform, entryId) in rule.ServerIds)
-                        if (!currentPlatforms.Contains(platform))
+                    {
+                        if (!currentPlatforms.Contains(platform) || rule.ToBeDeleted)
                             await RoutingConfigurationService.DeleteRoutingRule(entryId);
+                    }
                 }
             }
 

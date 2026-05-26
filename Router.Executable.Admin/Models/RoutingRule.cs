@@ -12,6 +12,7 @@ public class RoutingRule
     public string Target { get; set; }
     public UpdateMode UpdateMode { get; set; }
     public bool IsNew { get; set; }
+    public bool ToBeDeleted { get; set; }
 
     // platform → server-assigned GUID; empty for locally created rules
     public Dictionary<ClientPlatform, string> ServerIds { get; set; } = [];
@@ -34,6 +35,7 @@ public class RoutingRule
         Target = target;
         UpdateMode = updateMode;
         IsNew = isNew;
+        ToBeDeleted = false;
         ServerIds = serverIds ?? [];
         InitFingerprint = GetFingerprint();
         InitPropertyFingerprint = GetPropertyFingerprint();

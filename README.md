@@ -24,6 +24,20 @@ Targets and routing rules are managed through the REST API exposed by the router
 
 The public `get-server-address` endpoint is open. All management endpoints require an `Authorization: <token>` header configured on the server side.
 
+<details>
+<summary>📸 Click to view Admin UI Screenshots</summary>
+
+### Routing Rules Configuration
+![Rules Tab](images/admin-rules.png)
+
+### Maintenance
+![Maintenance Tab](images/admin-maintenance.png)
+
+### Targets Management
+![Targets Tab](images/admin-targets.png)
+
+</details>
+
 ## Reserved `maintenance` target
 
 The router reserves a target named `maintenance` for switching traffic during downtime. On every startup the router checks whether this target exists in the configuration and creates it automatically if it is missing (with `Maintenance = true` and a placeholder address). This guarantees that there is always a target available to redirect routing rules to when a real backend needs to go offline.
